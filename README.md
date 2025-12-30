@@ -6,7 +6,7 @@ This is the **full, working**, **locked-down by default** process you just prove
 
 * Docker + Portainer already installed
 * Ubuntu server has a **static LAN IP**
-* Public DNS `bw.signatureimagewear.com` points to your **public WAN IP**
+* Public DNS `bw.[YOURDOMAIN].com` points to your **public WAN IP**
 * UniFi forwards **80/443 → Ubuntu server LAN IP**
 * Only **Nginx Proxy Manager (NPM)** exposes **80/443**
 * Bitwarden is only reachable through NPM (TLS terminates at NPM)
@@ -231,7 +231,7 @@ networks:
 
 Set in Portainer:
 
-* `BW_DOMAIN=bw.signatureimagewear.com` ✅ **NO `https://`**
+* `BW_DOMAIN=bw.[YOURDOMAIN].com` ✅ **NO `https://`**
 
 * `BW_INSTALLATION_ID=...`
 
@@ -275,7 +275,7 @@ NPM Admin → **Hosts → Proxy Hosts → Add Proxy Host**
 
 ### Details
 
-* **Domain Names:** `bw.signatureimagewear.com`
+* **Domain Names:** `bw.[YOURDOMAIN].com`
 * **Scheme:** `http`
 * **Forward Hostname:** `bitwarden-lite`
 * **Forward Port:** `8080`
@@ -284,7 +284,7 @@ NPM Admin → **Hosts → Proxy Hosts → Add Proxy Host**
 
 ### SSL
 
-* Request/attach Let’s Encrypt cert for `bw.signatureimagewear.com`
+* Request/attach Let’s Encrypt cert for `bw.[YOURDOMAIN].com`
 * ✅ Force SSL (once cert is issued)
 * ✅ HTTP/2 Support
 
@@ -315,7 +315,7 @@ Save.
 From Ubuntu:
 
 ```bash
-curl -i -H "Host: bw.signatureimagewear.com" http://127.0.0.1/ | head -n 15
+curl -i -H "Host: bw.[YOURDOMAIN].com" http://127.0.0.1/ | head -n 15
 ```
 
 You should **not** see the NPM “Congratulations” page.
@@ -332,7 +332,7 @@ docker exec -it bitwarden-lite supervisorctl status
 
 Open (incognito recommended once):
 
-* `https://bw.signatureimagewear.com/#/register`
+* `https://bw.[YOURDOMAIN].com/#/register`
 
 Create a user and log in.
 
@@ -344,8 +344,8 @@ Create a user and log in.
    They’re cryptographically paired (Bitwarden DataProtection keys ↔ encrypted DB values). Breaking the pair causes login/key-ring failures.
 
 2. **`BW_DOMAIN` must be host-only**
-   ✅ `bw.signatureimagewear.com`
-   ❌ `https://bw.signatureimagewear.com` (causes origin/CORS/token errors like `https://https://...`)
+   ✅ `bw.[YOURDOMAIN].com`
+   ❌ `https://bw.[YOURDOMAIN].com` (causes origin/CORS/token errors like `https://https://...`)
 
 3. Keep SQL init behavior:
 
