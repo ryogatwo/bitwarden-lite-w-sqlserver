@@ -93,7 +93,7 @@ Deploy the stack.
 From your PC:
 
 ```bash
-ssh -L 81:127.0.0.1:81 ubuntu@linuxdocker.corp
+ssh -L 81:127.0.0.1:81 ubuntu@linuxdocker.local
 ```
 
 Open:
